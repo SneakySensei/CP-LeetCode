@@ -1,23 +1,19 @@
 class Solution {
 public:
     bool validPalindrome(string s) {
-        int i = 0, j=s.size()-1;
-        while(i<j){
-            if(s[i]!=s[j]){
-                return isP(s.substr(i, j-i)) || isP(s.substr(i+1, j-i));
-            }
-            i++;
-            j--;
-            
-        }
         
-        return true;
+        
+        return canBePalindrome(s, 1);
     }
     
-    bool isP(string s){
+    bool canBePalindrome(string s,int numDeletions){
         int i =0, j =s.size()-1;
         while(i<j){
-            if(s[i]!=s[j])return  false;
+            if(s[i]!=s[j]){
+                if(numDeletions > 0)
+                return canBePalindrome(s.substr(i, j-i), numDeletions-1) || canBePalindrome(s.substr(i+1, j-i), numDeletions-1);
+                else return false;
+            }
             i++;
             j--;
         }
