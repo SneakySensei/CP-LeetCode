@@ -1,20 +1,23 @@
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
-        if(prices.size() == 1) return 0;
-        vector<int> diffs;
-        for(int i = 0; i<prices.size()-1; i++){
-            diffs.push_back(prices[i+1]-prices[i]);
+        vector<int> perDayChange;
+        for(int i = 1; i<prices.size(); i++){
+            perDayChange.push_back(prices[i]-prices[i-1]);
         }
         
-        int maxSoFar = 0;
         int globalMax = INT_MIN;
-        for(auto num: diffs){
-            if(num > maxSoFar+num) maxSoFar = num;
-            else maxSoFar += num;
+        int maxSoFar = 0;
+        for(auto x: perDayChange){
+            if(x>maxSoFar+x){
+                maxSoFar=x;
+            } else {
+                maxSoFar+=x;
+            }
             
-            if(maxSoFar > globalMax) globalMax = maxSoFar;
+            globalMax = max(globalMax, maxSoFar);
         }
-        return globalMax < 0 ? 0 : globalMax;
+        
+        return globalMax>0 ? globalMax : 0;
     }
 };
