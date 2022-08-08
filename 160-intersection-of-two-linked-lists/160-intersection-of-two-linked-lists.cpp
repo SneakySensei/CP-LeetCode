@@ -12,9 +12,6 @@ public:
         ListNode* a = headA;
         ListNode* b = headB;
         
-        bool cycleA = false;
-        bool cycleB = false;
-        
         while(true){
             if(a==b) return a;
             if(a == nullptr){
