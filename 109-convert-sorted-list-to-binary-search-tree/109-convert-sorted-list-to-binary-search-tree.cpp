@@ -25,23 +25,24 @@ public:
         if(!head) return nullptr;
         if(!head->next) return new TreeNode(head->val);
         
-        // find mid;
+        // roughly find mid;
         ListNode *slow = head;
-        ListNode *fast = slow->next;
+        ListNode *fast = slow->next; // this will give us one less than the actual mid
         
         while(fast->next && fast->next->next){
             slow = slow->next;
             fast = fast->next->next;
         }
         
+        // break the LinkedList into 3 parts with head, mid, and right as their roots
         ListNode *mid = slow->next;
         slow->next = nullptr;
         
         ListNode *right = mid->next;
         mid->next = nullptr;
         
-        TreeNode *root = new TreeNode(mid->val, sortedListToBST(head), sortedListToBST(right));
-        return root;
+        // recursively get the left and right bst return the root for the current recursive call
+        return new TreeNode(mid->val, sortedListToBST(head), sortedListToBST(right));
         
     }
 };
